@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -43,6 +44,41 @@ public class IPLAnalyser {
 		} catch (RuntimeException e) {
 			throw new IPLAnalyserException("Wrong Delimiter or Header", IPLAnalyserExceptionType.SOME_OTHER_ERRORS);
 		}
+	}
+	
+	public  <E> List<E> loadData(String csvFilePath , Class <E>csvClass ) throws IPLAnalyserException 
+	{
+		if(!(csvFilePath.matches(".*\\.csv$")))
+			throw new IPLAnalyserException("Incorrect Type", IPLAnalyserExceptionType.INCORRECT_TYPE);
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+
+			ICsvBuilder csvBuilder = CsvBuilderFactory.createBuilder();	
+			List<E> playerList = csvBuilder.getListFromCsv(reader, csvClass);
+			return  playerList;	
+		}
+		catch (IOException e) {
+			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
+		}
+		catch (RuntimeException e) 
+		{ 
+			throw new IPLAnalyserException("Wrong Delimiter or Header", IPLAnalyserExceptionType.SOME_OTHER_ERRORS);
+		}
+	}
+
+	public List<IPLAllRounder> loadStats(String batsmanFilePath, String bowlerFilePath) throws IPLAnalyserException{
+		List<CSVIPLBatsmenRecords> iplBatsmanList=loadData(batsmanFilePath,CSVIPLBatsmenRecords.class);
+		List<CSVIPLBowlersRecords> iplBowlerList= loadData(bowlerFilePath,CSVIPLBowlersRecords.class); 
+		List<IPLAllRounder> iplAllRounderList= new ArrayList<IPLAllRounder>();
+		iplBatsmanList.stream().forEach(batsman->{
+			CSVIPLBowlersRecords bowlers = iplBowlerList.stream()
+					.filter(bowler-> bowler.player.equalsIgnoreCase(batsman.player)).findFirst()
+					.orElse(null);
+			if (bowlers!=null) {
+				iplAllRounderList.add(new IPLAllRounder(batsman.player,batsman.average,
+						bowlers.average, batsman.runs,bowlers.wickets));
+			}
+		});
+		return iplAllRounderList;
 	}
 
 	// UC1 sorting of cricketer with top batting averages && UC5 sorting the
@@ -206,6 +242,15 @@ public class IPLAnalyser {
 			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
 		}
 	}	
+	
+	//UC13 to know the cricketer who add the best batting averages and bowling avereages
+	
+	public List<IPLAllRounder>  getSortedAllroundersList(String batsmanFilePath, String bowlerFilePath) throws IPLAnalyserException {
+		List<IPLAllRounder> iplAllRounderList = loadStats(batsmanFilePath, bowlerFilePath);
+				return iplAllRounderList.stream().
+						sorted(Comparator.comparing(IPLAllRounder::getPerformanceByAverage).reversed())
+						.collect(Collectors.toList());
+	}
 	
 	public void sortBatsmenList(List<CSVIPLBatsmenRecords> playersList,
 			Comparator<CSVIPLBatsmenRecords> censusComparator) {
