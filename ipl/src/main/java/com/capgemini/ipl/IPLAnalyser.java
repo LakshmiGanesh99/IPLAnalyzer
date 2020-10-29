@@ -166,6 +166,6 @@ public class IPLAnalyser {
 					playersList.set(j+1, sortKey1);
 				}
 			}
-		}
+		} 
 	}
 }
