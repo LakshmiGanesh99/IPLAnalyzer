@@ -121,51 +121,61 @@ public class IPLAnalyser {
 		}
 	}
 
-	// UC7
-	/**
-	 * UC7
-	 */
+	// UC7 to know top bowling averages of players
+
 	public String getSortedBowlersListOnBowlingAverage(String csvFilePath) throws IPLAnalyserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			ICsvBuilder csvBuilder = CsvBuilderFactory.createBuilder();
 			List<CSVIPLBowlersRecords> bowlersList = csvBuilder.getListFromCsv(reader, CSVIPLBowlersRecords.class);
-			Function<CSVIPLBowlersRecords, Double> bowlersEntity=record->record.average;
-			Comparator<CSVIPLBowlersRecords> censusComparator=Comparator.comparing(bowlersEntity);
+			Function<CSVIPLBowlersRecords, Double> bowlersEntity = record -> record.average;
+			Comparator<CSVIPLBowlersRecords> censusComparator = Comparator.comparing(bowlersEntity);
 			this.sortBowlersList(bowlersList, censusComparator);
-			String sortedStateCensusToJson=new Gson().toJson(bowlersList);
+			String sortedStateCensusToJson = new Gson().toJson(bowlersList);
 			return sortedStateCensusToJson;
-		} 
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
 		}
 	}
-	
-	public void sortBatsmenList(List<CSVIPLBatsmenRecords> playersList, Comparator<CSVIPLBatsmenRecords> censusComparator) {
-		for(int i=0;i<playersList.size()-1;i++) 
-		{
-			for(int j=0; j<playersList.size()-i-1;j++)
-			{
-				CSVIPLBatsmenRecords sortKey1=playersList.get(j);
-				CSVIPLBatsmenRecords sortKey2=playersList.get(j+1);
-				if(censusComparator.compare(sortKey1, sortKey2)<0)
-				{
+
+	// UC8 to know the top Striking Rates of the Bowlers played
+
+	public String getSortedBowlersListOnBowlingStrikingRate(String csvFilePath) throws IPLAnalyserException {
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+			ICsvBuilder csvBuilder = CsvBuilderFactory.createBuilder();
+			List<CSVIPLBowlersRecords> bowlersList = csvBuilder.getListFromCsv(reader, CSVIPLBowlersRecords.class);
+			Function<CSVIPLBowlersRecords, Double> bowlersEntity = record -> record.strikeRate;
+			Comparator<CSVIPLBowlersRecords> censusComparator = Comparator.comparing(bowlersEntity);
+			this.sortBowlersList(bowlersList, censusComparator);
+			String sortedStateCensusToJson = new Gson().toJson(bowlersList);
+			return sortedStateCensusToJson;
+		} catch (IOException e) {
+			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
+		}
+	}
+
+	public void sortBatsmenList(List<CSVIPLBatsmenRecords> playersList,
+			Comparator<CSVIPLBatsmenRecords> censusComparator) {
+		for (int i = 0; i < playersList.size() - 1; i++) {
+			for (int j = 0; j < playersList.size() - i - 1; j++) {
+				CSVIPLBatsmenRecords sortKey1 = playersList.get(j);
+				CSVIPLBatsmenRecords sortKey2 = playersList.get(j + 1);
+				if (censusComparator.compare(sortKey1, sortKey2) < 0) {
 					playersList.set(j, sortKey2);
-					playersList.set(j+1, sortKey1);
+					playersList.set(j + 1, sortKey1);
 				}
 			}
 		}
 	}
-	public void sortBowlersList(List<CSVIPLBowlersRecords> playersList, Comparator<CSVIPLBowlersRecords> censusComparator) {
-		for(int i=0;i<playersList.size()-1;i++) 
-		{
-			for(int j=0; j<playersList.size()-i-1;j++)
-			{
-				CSVIPLBowlersRecords sortKey1=playersList.get(j);
-				CSVIPLBowlersRecords sortKey2=playersList.get(j+1);
-				if(censusComparator.compare(sortKey1, sortKey2)<0)
-				{
+
+	public void sortBowlersList(List<CSVIPLBowlersRecords> playersList,
+			Comparator<CSVIPLBowlersRecords> censusComparator) {
+		for (int i = 0; i < playersList.size() - 1; i++) {
+			for (int j = 0; j < playersList.size() - i - 1; j++) {
+				CSVIPLBowlersRecords sortKey1 = playersList.get(j);
+				CSVIPLBowlersRecords sortKey2 = playersList.get(j + 1);
+				if (censusComparator.compare(sortKey1, sortKey2) > 0) {
 					playersList.set(j, sortKey2);
-					playersList.set(j+1, sortKey1);
+					playersList.set(j + 1, sortKey1);
 				}
 			}
 		}

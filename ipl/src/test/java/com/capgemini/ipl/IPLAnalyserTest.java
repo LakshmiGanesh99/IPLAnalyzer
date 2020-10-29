@@ -7,12 +7,13 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 public class IPLAnalyserTest {
-	public static final String RIGHT_BATSMEN_CSV = "src/main/resources/IPL2019FactsheetMostRuns.csv";
-	public static final String WRONG_BATSMEN_CSV = "src/main/resources/IPL2019FactsheetMostRunssdd.csv";
-	public static final String WRONGTYPE_BATSMEN_CSV = "src/main/resources/IPL2019FactsheetMostRuns.pdf";
-	public static final String RIGHT_BOWLERS_CSV = "src/main/resources/IPL2019FactsheetMostWkts.csv";
-	public static final String WRONG_BOWLERS_CSV = "src/main/resources/IPL2019FactsheetMostwktsss.csv";
-	public static final String WRONGTYPE_BOWLERS_CSV = "src/main/resources/IPL2019FactsheetMostWkts.pdf";
+	public static final String RIGHT_BATSMEN_CSV = "src/resources/IPL2019FactsheetMostRuns.csv";
+	public static final String WRONG_BATSMEN_CSV = "src/resources/IPL2019FactsheetMostRunssdd.csv";
+	public static final String WRONGTYPE_BATSMEN_CSV = "src/resources/IPL2019FactsheetMostRuns.pdf";
+	public static final String RIGHT_BOWLERS_CSV = "src/resources/IPL2019FactsheetMostWkts.csv";
+	public static final String WRONG_BOWLERS_CSV = "src/resources/IPL2019FactsheetMostwktsss.csv";
+	public static final String WRONGTYPE_BOWLERS_CSV = "src/resources/IPL2019FactsheetMostWkts.pdf";
+	
 	
 	@Test
 	public void givenBatsmenDataCsv_ShouldReturnExactCount() {
@@ -134,9 +135,20 @@ public class IPLAnalyserTest {
 	@Test
 	public void givenSortedOnBowlingAverageBowlersList_ShouldReturnBestAveragedBowler() {
 		try {
-			String sortedBatsmenJson = new IPLAnalyser().getSortedBowlersListOnBowlingAverage(RIGHT_BOWLERS_CSV);
-			CSVIPLBatsmenRecords[] batsmenListCsv=new Gson().fromJson(sortedBatsmenJson, CSVIPLBatsmenRecords[].class);
-			assertEquals("Krishnappa Gowtham", batsmenListCsv[0].player);
+			String sortedBowlersJson = new IPLAnalyser().getSortedBowlersListOnBowlingAverage(RIGHT_BOWLERS_CSV);
+			CSVIPLBowlersRecords[] bowlersListCsv=new Gson().fromJson(sortedBowlersJson, CSVIPLBowlersRecords[].class);
+			assertEquals("Anukul Roy", bowlersListCsv[0].player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void givenSortedOnBowlingStrikeRateBowlersList_ShouldReturnBestStrikingBowler() {
+		try {
+			String sortedBowlersJson = new IPLAnalyser().getSortedBowlersListOnBowlingStrikingRate(RIGHT_BOWLERS_CSV);
+			CSVIPLBowlersRecords[] bowlersListCsv=new Gson().fromJson(sortedBowlersJson, CSVIPLBowlersRecords[].class);
+			assertEquals("Alzarri Joseph", bowlersListCsv[0].player);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
