@@ -62,7 +62,7 @@ public class IPLAnalyserTest {
 	}
 
 	@Test
-	public void givenSortedOnMostSixesBatsmenList_ShouldReturnTopStrikeRateBatsman() {
+	public void givenSortedOnMostSixesBatsmenList_ShouldReturnWhoHitMostSixes() {
 		try {
 			String sortedBatsmenJson = new IPLAnalyser().getSortedBatsmenListOnMostSixes(RIGHT_CENSUS_CSV);
 			CSVIPLRecords[] batsmenListCsv = new Gson().fromJson(sortedBatsmenJson, CSVIPLRecords[].class);
@@ -73,11 +73,22 @@ public class IPLAnalyserTest {
 	}
 
 	@Test
-	public void givenSortedOnMostFoursBatsmenList_ShouldReturnTopStrikeRateBatsman() {
+	public void givenSortedOnMostFoursBatsmenList_ShouldReturnPlayerWhoHitMostFours() {
 		try {
 			String sortedBatsmenJson = new IPLAnalyser().getSortedBatsmenListOnMostFours(RIGHT_CENSUS_CSV);
 			CSVIPLRecords[] batsmenListCsv = new Gson().fromJson(sortedBatsmenJson, CSVIPLRecords[].class);
 			assertEquals("Shikhar Dhawan", batsmenListCsv[0].player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void givenSortedOnMaxRunsBatsmenList_ShouldReturnTopRunsScorer() {
+		try {
+			String sortedBatsmenJson = new IPLAnalyser().getSortedBatsmenListOnMaxRuns(RIGHT_CENSUS_CSV);
+			CSVIPLRecords[] batsmenListCsv = new Gson().fromJson(sortedBatsmenJson, CSVIPLRecords[].class);
+			assertEquals("David Warner ", batsmenListCsv[0].player);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

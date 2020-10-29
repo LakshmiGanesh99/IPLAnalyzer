@@ -28,7 +28,8 @@ public class IPLAnalyser {
 		}
 	}
 
-	// UC1 sorting of cricketer with top batting averages && UC5 sorting the cricketers who had best averages with good striking
+	// UC1 sorting of cricketer with top batting averages && UC5 sorting the
+	// cricketers who had best averages with good striking
 
 	public String getSortedBatsmenListOnBattingAverage(String csvFilePath) throws IPLAnalyserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
@@ -43,7 +44,7 @@ public class IPLAnalyser {
 			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
 		}
 	}
-	// UC2 sorting of cricketers to know the top striking rate of batsman  && UC4 to 
+	// UC2 sorting of cricketers to know the top striking rate of batsman && UC4 to
 	// sort cricketeres with best striking rate and top 6s and 4s
 
 	public String getSortedBatsmenListOnTopStrikingRates(String csvFilePath) throws IPLAnalyserException {
@@ -100,6 +101,21 @@ public class IPLAnalyser {
 					batsmenList.set(j + 1, sortKey1);
 				}
 			}
+		}
+	}
+	
+	// UC6 sorting of cricketers with maximum runs and best averages
+	public String getSortedBatsmenListOnMaxRuns(String csvFilePath) throws IPLAnalyserException {
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+			ICsvBuilder csvBuilder = CsvBuilderFactory.createBuilder();
+			List<CSVIPLRecords> batsmenList = csvBuilder.getListFromCsv(reader, CSVIPLRecords.class);
+			Function<CSVIPLRecords, Integer> batsmanEntity = record -> record.runs;
+			Comparator<CSVIPLRecords> censusComparator = Comparator.comparing(batsmanEntity);
+			this.sortBatsmenList(batsmenList, censusComparator);
+			String sortedStateCensusToJson = new Gson().toJson(batsmenList);
+			return sortedStateCensusToJson;
+		} catch (IOException e) {
+			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
 		}
 	}
 }
