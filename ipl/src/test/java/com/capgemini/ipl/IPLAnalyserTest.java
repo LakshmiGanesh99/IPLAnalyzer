@@ -10,7 +10,7 @@ public class IPLAnalyserTest {
 	public static final String RIGHT_CENSUS_CSV = "/Users/lakshmiganesh/git/iplAnalyzer/ipl/src/resources/IPL2019FactsheetMostRuns.csv";
 	public static final String WRONG_CENSUS_CSV = "/Users/lakshmiganesh/git/iplAnalyzer/ipl/src/resources/IPL2019FactsheetMostRuns.csv";
 	public static final String WRONGTYPE_CENSUS_CSV = "/Users/lakshmiganesh/git/iplAnalyzer/ipl/src/resources/IPL2019FactsheetMostRuns.pdf";
-	
+
 	@Test
 	public void givenBatsmenDataCsv_ShouldReturnExactCount() {
 		try {
