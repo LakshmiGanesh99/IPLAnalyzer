@@ -2,7 +2,7 @@ package com.capgemini.ipl;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class CSVIPLRecords {
+public class CSVIPLBatsmenRecords {
 	
 	@CsvBindByName(column = "POS")
 	public int position;
