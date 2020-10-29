@@ -7,9 +7,9 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 public class IPLAnalyserTest {
-	public static final String RIGHT_CENSUS_CSV = "C:\\Users\\Rajan\\eclipse-workspace\\IPLAnalyzer\\file\\resources\\IPL2019FactsheetMostRuns.csv";
-	public static final String WRONG_CENSUS_CSV = "C:\\Users\\Rajan\\eclipse-workspace\\IPLAnalyzer\\file\\resources\\IPL2019FactsheetMostRunssdd.csv";
-	public static final String WRONGTYPE_CENSUS_CSV = "C:\\Users\\Rajan\\eclipse-workspace\\IPLAnalyzer\\file\\resources\\IPL2019FactsheetMostRuns.pdf";
+	public static final String RIGHT_CENSUS_CSV = "/Users/lakshmiganesh/git/iplAnalyzer/ipl/src/resources/IPL2019FactsheetMostRuns.csv";
+	public static final String WRONG_CENSUS_CSV = "/Users/lakshmiganesh/git/iplAnalyzer/ipl/src/resources/IPL2019FactsheetMostRuns.csv";
+	public static final String WRONGTYPE_CENSUS_CSV = "/Users/lakshmiganesh/git/iplAnalyzer/ipl/src/resources/IPL2019FactsheetMostRuns.pdf";
 	
 	@Test
 	public void givenBatsmenDataCsv_ShouldReturnExactCount() {
@@ -43,11 +43,22 @@ public class IPLAnalyserTest {
 	}
 	
 	@Test
-	public void givenSortedBattingAverageBatsmenList_ShouldReturnBestAveragedBatsman() {
+	public void givenSortedOnBattingAverageBatsmenList_ShouldReturnBestAveragedBatsman() {
 		try {
-			String sortedBatsmenJson = new IPLAnalyser().getSortedBatsmenList(RIGHT_CENSUS_CSV);
+			String sortedBatsmenJson = new IPLAnalyser().getSortedBatsmenListOnBattingAverage(RIGHT_CENSUS_CSV);
 			CSVIPLRecords[] batsmenListCsv=new Gson().fromJson(sortedBatsmenJson, CSVIPLRecords[].class);
 			assertEquals("MS Dhoni", batsmenListCsv[0].player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void givenSortedOnStrikingRatesBatsmenList_ShouldReturnTopStrikeRateBatsman() {
+		try {
+			String sortedBatsmenJson = new IPLAnalyser().getSortedBatsmenListOnTopStrikingRates(RIGHT_CENSUS_CSV);
+			CSVIPLRecords[] batsmenListCsv=new Gson().fromJson(sortedBatsmenJson, CSVIPLRecords[].class);
+			assertEquals("Ishant Sharma", batsmenListCsv[0].player);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
