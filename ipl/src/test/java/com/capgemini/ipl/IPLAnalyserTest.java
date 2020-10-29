@@ -153,4 +153,15 @@ public class IPLAnalyserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void givenSortedOnBowlingEconomyBowlersList_ShouldReturnMostEconomicBowler() {
+		try {
+			String sortedBowlersJson = new IPLAnalyser().getSortedBowlersListOnBowlingEconomy(RIGHT_BOWLERS_CSV);
+			CSVIPLBowlersRecords[] bowlersListCsv=new Gson().fromJson(sortedBowlersJson, CSVIPLBowlersRecords[].class);
+			assertEquals("Shivam Dube", bowlersListCsv[0].player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
