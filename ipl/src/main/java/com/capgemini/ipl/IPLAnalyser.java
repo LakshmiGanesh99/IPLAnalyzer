@@ -245,12 +245,23 @@ public class IPLAnalyser {
 	
 	//UC13 to know the cricketer who add the best batting averages and bowling avereages
 	
-	public List<IPLAllRounder>  getSortedAllroundersList(String batsmanFilePath, String bowlerFilePath) throws IPLAnalyserException {
+	public List<IPLAllRounder>  getSortedAllroundersListByBatting_BowlingAvg(String batsmanFilePath, String bowlerFilePath) throws IPLAnalyserException {
 		List<IPLAllRounder> iplAllRounderList = loadStats(batsmanFilePath, bowlerFilePath);
 				return iplAllRounderList.stream().
 						sorted(Comparator.comparing(IPLAllRounder::getPerformanceByAverage).reversed())
 						.collect(Collectors.toList());
 	}
+	
+	//UC14 to know best all rounders that means the most runs and wickets
+	
+	public List<IPLAllRounder> getSoredtAllrounderListByWicketsAndRuns(String batsmanFilePath, String bowlerFilePath) throws IPLAnalyserException {
+		List<IPLAllRounder> iplAllRounderList = loadStats(batsmanFilePath, bowlerFilePath);
+		return iplAllRounderList.stream()
+				.sorted(Comparator.comparing(IPLAllRounder::getPerformanceByRunsAndWickets).reversed())
+				.collect(Collectors.toList());
+	}
+	
+	
 	
 	public void sortBatsmenList(List<CSVIPLBatsmenRecords> playersList,
 			Comparator<CSVIPLBatsmenRecords> censusComparator) {
