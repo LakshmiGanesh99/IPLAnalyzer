@@ -28,7 +28,7 @@ public class IPLAnalyser {
 		}
 	}
 
-	// UC1 sorting of cricketer with top batting averages
+	// UC1 sorting of cricketer with top batting averages && UC5 sorting the cricketers who had best averages with good striking
 
 	public String getSortedBatsmenListOnBattingAverage(String csvFilePath) throws IPLAnalyserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
