@@ -7,12 +7,12 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 public class IPLAnalyserTest {
-	public static final String RIGHT_BATSMEN_CSV = "src/main/resources/IPL2019FactsheetMostRuns.csv";
-	public static final String WRONG_BATSMEN_CSV = "src/main/resources/IPL2019FactsheetMostRunssdd.csv";
-	public static final String WRONGTYPE_BATSMEN_CSV = "src/main/resources/IPL2019FactsheetMostRuns.pdf";
-	public static final String RIGHT_BOWLERS_CSV = "src/main/resources/IPL2019FactsheetMostWkts.csv";
-	public static final String WRONG_BOWLERS_CSV = "src/main/resources/IPL2019FactsheetMostwktsss.csv";
-	public static final String WRONGTYPE_BOWLERS_CSV = "src/main/resources/IPL2019FactsheetMostWkts.pdf";
+	public static final String RIGHT_BATSMEN_CSV = "src/resources/IPL2019FactsheetMostRuns.csv";
+	public static final String WRONG_BATSMEN_CSV = "src/resources/IPL2019FactsheetMostRunssdd.csv";
+	public static final String WRONGTYPE_BATSMEN_CSV = "src/resources/IPL2019FactsheetMostRuns.pdf";
+	public static final String RIGHT_BOWLERS_CSV = "src/resources/IPL2019FactsheetMostWkts.csv";
+	public static final String WRONG_BOWLERS_CSV = "src/resources/IPL2019FactsheetMostwktsss.csv";
+	public static final String WRONGTYPE_BOWLERS_CSV = "src/resources/IPL2019FactsheetMostWkts.pdf";
 	
 	@Test
 	public void givenBatsmenDataCsv_ShouldReturnExactCount() {
