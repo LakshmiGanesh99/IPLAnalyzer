@@ -189,6 +189,23 @@ public class IPLAnalyser {
 			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
 		}
 	}
+
+	//UC12 to know the bowler with maximum wickets with best bowling averages 
+	
+	public String getSortedBowlersListOnMostWickets(String csvFilePath) throws IPLAnalyserException {
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+			ICsvBuilder csvBuilder = CsvBuilderFactory.createBuilder();
+			List<CSVIPLBowlersRecords> bowlersList = csvBuilder.getListFromCsv(reader, CSVIPLBowlersRecords.class);
+			Function<CSVIPLBowlersRecords, Integer> bowlersEntity=record->record.wickets;
+			Comparator<CSVIPLBowlersRecords> censusComparator=Comparator.comparing(bowlersEntity);
+			this.sortBowlersList(bowlersList, censusComparator);
+			String sortedPlayersListToJson=new Gson().toJson(bowlersList);
+			return sortedPlayersListToJson;
+		} 
+		catch (IOException e) {
+			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
+		}
+	}	
 	
 	public void sortBatsmenList(List<CSVIPLBatsmenRecords> playersList,
 			Comparator<CSVIPLBatsmenRecords> censusComparator) {

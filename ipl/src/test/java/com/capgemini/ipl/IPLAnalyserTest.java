@@ -190,4 +190,15 @@ public class IPLAnalyserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void givenSortedOnMostWicketsBowlersList_ShouldReturnMostWicketsTakingBowler() {
+		try {
+			String sortedBowlersJson = new IPLAnalyser().getSortedBowlersListOnMostWickets(RIGHT_BOWLERS_CSV);
+			CSVIPLBowlersRecords[] bowlersListCsv=new Gson().fromJson(sortedBowlersJson, CSVIPLBowlersRecords[].class);
+			assertEquals("Imran Tahir", bowlersListCsv[98].player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
