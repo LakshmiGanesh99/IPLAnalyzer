@@ -235,4 +235,13 @@ public class IPLAnalyserTest {
 		}
 
 	}
+	
+	@Test
+	public void givenSortedOnBestAverageWithZero100sAndZero50s_ShouldReturnBestAveragedBatsman() {
+		try {
+			String sortedBatsmenJson = new IPLAnalyser().getSortedBatsmenListOnZero50sAnd100sButBestAverage(RIGHT_BATSMEN_CSV);
+			CSVIPLBatsmenRecords[] batsmenListCsv=new Gson().fromJson(sortedBatsmenJson, CSVIPLBatsmenRecords[].class);
+			assertEquals("Marcus Stoinis", batsmenListCsv[0].player);
+		} catch (Exception e) {
+			e.printStackTrace();
 }
