@@ -28,7 +28,7 @@ public class IPLAnalyser {
 		}
 	}
 
-	// UC1 sorting of cricketer with top betting averages
+	// UC1 sorting of cricketer with top batting averages
 
 	public String getSortedBatsmenListOnBattingAverage(String csvFilePath) throws IPLAnalyserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
@@ -43,7 +43,8 @@ public class IPLAnalyser {
 			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
 		}
 	}
-	// UC2 sorting of cricketers to know the top striking rate of batsman
+	// UC2 sorting of cricketers to know the top striking rate of batsman  && UC4 to 
+	// sort cricketeres with best striking rate and top 6s and 4s
 
 	public String getSortedBatsmenListOnTopStrikingRates(String csvFilePath) throws IPLAnalyserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
