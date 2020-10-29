@@ -121,10 +121,8 @@ public class IPLAnalyser {
 		}
 	}
 
-	// UC7
-	/**
-	 * UC7
-	 */
+	// UC7 to know top bowling averages of players
+	
 	public String getSortedBowlersListOnBowlingAverage(String csvFilePath) throws IPLAnalyserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			ICsvBuilder csvBuilder = CsvBuilderFactory.createBuilder();
