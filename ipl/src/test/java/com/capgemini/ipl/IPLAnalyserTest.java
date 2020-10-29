@@ -178,4 +178,16 @@ public class IPLAnalyserTest {
 			e.printStackTrace();
 		}
 	}
+	
+
+	@Test
+	public void givenSortedOnBowlingAverageAndStrikingRatePossibleBowlersList_ShouldReturnBestAveragedBowler() {
+		try {
+			String sortedBowlersJson = new IPLAnalyser().getSortedBowlersListOnBowlingAverage(RIGHT_BOWLERS_CSV);
+			CSVIPLBowlersRecords[] bowlersListCsv=new Gson().fromJson(sortedBowlersJson, CSVIPLBowlersRecords[].class);
+			assertEquals("Anukul Roy", bowlersListCsv[0].player);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
