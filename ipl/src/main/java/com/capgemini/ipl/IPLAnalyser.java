@@ -261,7 +261,23 @@ public class IPLAnalyser {
 				.collect(Collectors.toList());
 	}
 	
+	//UC15 to know Cricketers who hit maximum hundreds and had best batting averages
 	
+	public List<CSVIPLBatsmenRecords> getBestAvgWithMax100s(String csvFilePath) throws IPLAnalyserException {
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+			ICsvBuilder csvBuilder = CsvBuilderFactory.createBuilder();
+			List<CSVIPLBatsmenRecords> iplBattingList = csvBuilder.getListFromCsv(reader, CSVIPLBatsmenRecords.class);
+			Function<CSVIPLBatsmenRecords, Double> batsmanEntity=record->record.average;
+			Comparator<CSVIPLBatsmenRecords> censusComparator=Comparator.comparing(batsmanEntity);
+			this.sortBatsmenList(iplBattingList, censusComparator);
+			Comparator<CSVIPLBatsmenRecords> a = Comparator.comparing(CSVIPLBatsmenRecords::getCentury)
+				.thenComparing(Comparator.comparing(CSVIPLBatsmenRecords::getAverage)).reversed();
+		return iplBattingList.stream().sorted(a).collect(Collectors.toList());
+		}
+		catch (IOException e) {
+			throw new IPLAnalyserException("Incorrect CSV File", IPLAnalyserExceptionType.CENSUS_FILE_PROBLEM);
+		}
+	}
 	
 	public void sortBatsmenList(List<CSVIPLBatsmenRecords> playersList,
 			Comparator<CSVIPLBatsmenRecords> censusComparator) {

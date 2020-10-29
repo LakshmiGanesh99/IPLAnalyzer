@@ -40,5 +40,11 @@ public class CSVIPLBatsmenRecords {
 				+ ", ballFaced=" + ballFaced + ", strikeRate=" + strikeRate + ", century=" + century + ", halfCentury="
 				+ halfCentury + ", fours=" + fours + ", sixes=" + sixes + "]";
 	}
+	public int getCentury() {
+		return century;
+	}
+	public double getAverage() {
+		return average;
+	}
 	
 }
